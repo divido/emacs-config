@@ -29,6 +29,10 @@
 (global-set-key "\M-P" 'windmove-up)
 (global-set-key "\M-N" 'windmove-down)
 
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
 ;; ---- C++ Coding Stuff ----------------------------------------------------------
 (require 'smart-tabs)
 (require 'c++-skeletons)
