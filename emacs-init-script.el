@@ -42,6 +42,9 @@
 (if (not (eq window-system 'nil))
 	(color-theme-solarized-dark))
 
+(require 'maxframe)
+(add-hook 'window-setup-hook 'maximize-frame t)
+
 ;; ---- C++ Coding Stuff ----------------------------------------------------------
 (require 'smart-tabs)
 (require 'c++-skeletons)
