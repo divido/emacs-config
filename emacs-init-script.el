@@ -39,7 +39,8 @@
 (scroll-bar-mode -1)
 
 (require 'color-theme)
-(color-theme-solarized-dark)
+(if (not (eq window-system 'nil))
+	(color-theme-solarized-dark))
 
 ;; ---- C++ Coding Stuff ----------------------------------------------------------
 (require 'smart-tabs)
