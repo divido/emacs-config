@@ -88,6 +88,7 @@
 (global-set-key "\M-csf" 'c++-stl-foreach)
 (global-set-key "\M-cl" 'align)
 (global-set-key "\M-c\M-l" 'align-regexp)
+(global-set-key "\M-cmn" 'linum-mode)
 
 ;; ---- Auto Mode -----------------------------------------------------------------
 (setq auto-mode-alist
