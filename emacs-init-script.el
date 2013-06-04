@@ -6,12 +6,18 @@
 (add-to-list 'load-path (expand-file-name "~/emacs/skeletons"))
 (add-to-list 'load-path (expand-file-name "~/emacs/themes"))
 
+;; ---- Set Backups to use their own special directory ---------------------------
+(setq backup-directory-alist `(("." . "~/.emacs-backups")))
+(setq backup-by-copying-when-linked t)
+(setq delete-old-versions t)
+(setq kept-new-versions 6)
+(setq kept-old-versions 2)
+
 ;; ---- Configuring the display / general setup ----------------------------------
 (setq-default show-trailing-whitespace t)
 (setq-default split-height-threshold nil)
 (setq-default fill-column 80)
 (setq-default truncate-lines t)
-(setq make-backup-files nil)
 (transient-mark-mode 1)
 
 (require 'uniquify)
