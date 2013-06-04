@@ -4,7 +4,12 @@
 (add-to-list 'load-path (expand-file-name "~/emacs/modes"))
 (add-to-list 'load-path (expand-file-name "~/emacs/modes/git-modes"))
 (add-to-list 'load-path (expand-file-name "~/emacs/skeletons"))
-(add-to-list 'load-path (expand-file-name "~/emacs/themes"))
+
+;; ---- Package repositories -----------------------------------------------------
+
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
@@ -32,6 +37,9 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+(require 'color-theme)
+(color-theme-solarized-dark)
 
 ;; ---- C++ Coding Stuff ----------------------------------------------------------
 (require 'smart-tabs)
