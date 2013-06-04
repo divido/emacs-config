@@ -69,6 +69,12 @@
 (require 'gitconfig-mode)
 (require 'gitignore-mode)
 
+;; ---- Auto Fill -----------------------------------------------------------------
+(defun auto-fill-80 ()
+  (interactive)
+  (auto-fill-mode)
+  (setq fill-column 80))
+
 ;; ---- Documents -----------------------------------------------------------------
 (add-hook 'tex-mode-hook 'flyspell-mode)
 
@@ -76,7 +82,7 @@
 (global-unset-key "\M-c") ;; Who needs capitialize-word? I use this as a prefix key for my own stuff
 (global-set-key "\M-c\M-w" 'delete-trailing-whitespace)
 (global-set-key "\M-c\M-c" 'uncomment-region)
-(global-set-key "\M-c\M-f" 'auto-fill-mode)
+(global-set-key "\M-c\M-f" 'auto-fill-80)
 (global-set-key "\M-c`" 'compile)
 (global-set-key "\M-csc" 'c++-class-skeleton)
 (global-set-key "\M-csf" 'c++-stl-foreach)
