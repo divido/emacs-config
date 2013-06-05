@@ -47,6 +47,7 @@
 ;; ---- C++ Coding Stuff ----------------------------------------------------------
 (require 'smart-tabs)
 (require 'c++-skeletons)
+(require 'c++-extra-keywords)
 
 (setq c-default-style "bsd")
 (setq-default tab-width 4)
