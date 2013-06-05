@@ -22,4 +22,14 @@
   iter " != " container ".end(); "
   iter "++)")
 
+(define-skeleton c++-doxygen-block
+  "Makes a doxygen block with C++ comments"
+  ""
+  "/**"
+  '(c-indent-line-or-region)
+  "\n* \\brief "
+  '(c-indent-line-or-region) _
+  "\n*/"
+  '(c-indent-line-or-region))
+
 (provide 'c++-skeletons)

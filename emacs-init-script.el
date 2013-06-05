@@ -86,6 +86,7 @@
 (global-set-key "\M-c`" 'compile)
 (global-set-key "\M-csc" 'c++-class-skeleton)
 (global-set-key "\M-csf" 'c++-stl-foreach)
+(global-set-key "\M-csd" 'c++-doxygen-block)
 (global-set-key "\M-cl" 'align)
 (global-set-key "\M-c\M-l" 'align-regexp)
 (global-set-key "\M-cmn" 'linum-mode)
