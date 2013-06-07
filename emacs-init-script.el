@@ -53,6 +53,24 @@
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
 
+;; ---- Shell Commands ------------------------------------------------------------
+
+(global-set-key "\C-z" 'eshell)
+
+(defun eshell-init-cmds ()
+  (interactive)
+  (local-set-key (kbd "C-M-z")
+				 '(lambda ()
+					(interactive)
+					(switch-to-buffer nil)))
+  (setq show-trailing-whitespace nil))
+
+(defun eshell/make (&rest args)
+  "Invokes make with supplied arguments in a compilation buffer"
+  (compile (apply 'eshell-flatten-and-stringify "make" args)))
+
+(add-hook 'eshell-mode-hook 'eshell-init-cmds)
+
 ;; ---- Build System Integration --------------------------------------------------
 (require 'cmake-mode)
 (setq-default compilation-scroll-output t)
