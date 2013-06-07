@@ -9,6 +9,16 @@
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
+(package-refresh-contents)
+
+;; This iterates through a list of packages that are necessary for processing
+;; this initialization file, and prompts for installation if any are missing.
+(mapc
+ (lambda (package)
+   (or (package-installed-p package)
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+           (package-install package))))
+ '(color-theme color-theme-solarized maxframe))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
