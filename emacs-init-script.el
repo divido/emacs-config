@@ -43,6 +43,12 @@
 (global-set-key "\M-P" 'windmove-up)
 (global-set-key "\M-N" 'windmove-down)
 
+;; For moving the screen a little without moving the point
+(defun scroll-down-1 () (interactive) (scroll-down 1))
+(defun scroll-up-1   () (interactive) (scroll-up 1))
+(global-set-key "\M-p" 'scroll-down-1)
+(global-set-key "\M-n" 'scroll-up-1)
+
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
