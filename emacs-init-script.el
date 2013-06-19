@@ -112,7 +112,12 @@
   (setq fill-column 80))
 
 ;; ---- Documents -----------------------------------------------------------------
-(add-hook 'tex-mode-hook 'flyspell-mode)
+(add-hook 'latex-mode-hook
+		  (lambda ()
+			(auto-fill-mode)
+			(setq fill-column 132)
+			(setq fill-prefix "  ")
+			(flyspell-mode)))
 
 ;; Useful for Guitar tabs
 (defun split-and-follow ()
@@ -145,7 +150,8 @@
          ("\\.h\\'"    . c++-mode)
          ("\\.Make\\'" . makefile-mode)
          ("CMakeLists\\.txt\\'" . cmake-mode)
-         ("\\.cmake\\'" . cmake-mode))
+         ("\\.cmake\\'" . cmake-mode)
+		 ("\\.tex$" . LaTeX-mode))
        auto-mode-alist))
 
 ;; ---- Emacs Customize Variables -------------------------------------------------
