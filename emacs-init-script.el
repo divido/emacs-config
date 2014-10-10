@@ -168,7 +168,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#002b36" :foreground "#839496" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "Liberation Mono"))))
+ '(default ((t (:height 80 :family "Liberation Mono"))))
  '(semantic-decoration-on-unknown-includes ((((class color) (background light)) (:background "#333333")))))
 
 (put 'downcase-region 'disabled nil)
