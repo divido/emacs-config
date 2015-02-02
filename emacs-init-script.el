@@ -1,9 +1,7 @@
 
 ;; ---- Load Paths ---------------------------------------------------------------
-(add-to-list 'load-path (expand-file-name "~/emacs/helpers"))
-(add-to-list 'load-path (expand-file-name "~/emacs/modes"))
-(add-to-list 'load-path (expand-file-name "~/emacs/modes/git-modes"))
-(add-to-list 'load-path (expand-file-name "~/emacs/skeletons"))
+(let ((default-directory "~/emacs"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;; ---- Package repositories -----------------------------------------------------
 (require 'package)
