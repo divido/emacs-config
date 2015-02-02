@@ -1,3 +1,0 @@
-[submodule "modes/git-modes"]
-	path = modes/git-modes
-	url = https://github.com/lunaryorn/git-modes.git
