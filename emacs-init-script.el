@@ -53,7 +53,8 @@
 (global-set-key "\M-p" 'scroll-down-1)
 (global-set-key "\M-n" 'scroll-up-1)
 
-(iswitchb-mode 1)
+(ido-mode)
+(ido-everywhere)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
