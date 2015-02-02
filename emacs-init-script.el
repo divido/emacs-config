@@ -110,6 +110,9 @@
 (require 'gitconfig-mode)
 (require 'gitignore-mode)
 
+;; ---- Web Mode ------------------------------------------------------------------
+(require 'web-mode)
+
 ;; ---- Auto Fill -----------------------------------------------------------------
 (defun auto-fill-80 ()
   (interactive)
@@ -156,7 +159,10 @@
          ("\\.Make\\'" . makefile-mode)
          ("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)
-		 ("\\.tex$" . LaTeX-mode))
+		 ("\\.tex$" . LaTeX-mode)
+		 ("\\.html$" . web-mode)
+		 ("\\.js$" . web-mode)
+		 ("\\.php$" . web-mode))
        auto-mode-alist))
 
 ;; ---- Emacs Customize Variables -------------------------------------------------
