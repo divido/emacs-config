@@ -1,24 +1,28 @@
 
 ;; ---- Load Paths ---------------------------------------------------------------
-(add-to-list 'load-path (expand-file-name "~/emacs/helpers"))
-(add-to-list 'load-path (expand-file-name "~/emacs/modes"))
-(add-to-list 'load-path (expand-file-name "~/emacs/modes/git-modes"))
-(add-to-list 'load-path (expand-file-name "~/emacs/skeletons"))
+(let ((default-directory "~/emacs"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;; ---- Package repositories -----------------------------------------------------
 (require 'package)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
-(package-refresh-contents)
 
-;; This iterates through a list of packages that are necessary for processing
-;; this initialization file, and prompts for installation if any are missing.
-(mapc
- (lambda (package)
-   (or (package-installed-p package)
-       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
-           (package-install package))))
- '(color-theme color-theme-solarized maxframe git-commit-mode gitconfig-mode gitignore-mode))
+;; Create the packages-up-to-date file if you want to skip this package checking
+;; on this site. It makes emacs launch faster, but these commands are important
+;; on the first invocation after a clean setup.
+(unless (file-exists-p "~/emacs/packages-up-to-date")
+  (progn
+	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+	(package-refresh-contents)
+
+	;; This iterates through a list of packages that are necessary for processing
+	;; this initialization file, and prompts for installation if any are missing.
+	(mapc
+	 (lambda (package)
+	   (or (package-installed-p package)
+		   (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+			   (package-install package))))
+	 '(color-theme color-theme-solarized maxframe git-commit-mode gitconfig-mode gitignore-mode))))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
@@ -49,7 +53,8 @@
 (global-set-key "\M-p" 'scroll-down-1)
 (global-set-key "\M-n" 'scroll-up-1)
 
-(iswitchb-mode 1)
+(ido-mode)
+(ido-everywhere)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -105,6 +110,9 @@
 (require 'gitconfig-mode)
 (require 'gitignore-mode)
 
+;; ---- Web Mode ------------------------------------------------------------------
+(require 'web-mode)
+
 ;; ---- Auto Fill -----------------------------------------------------------------
 (defun auto-fill-80 ()
   (interactive)
@@ -151,10 +159,21 @@
          ("\\.Make\\'" . makefile-mode)
          ("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)
-		 ("\\.tex$" . LaTeX-mode))
+		 ("\\.tex$" . LaTeX-mode)
+		 ("\\.html$" . web-mode)
+		 ("\\.js$" . web-mode)
+		 ("\\.php$" . web-mode))
        auto-mode-alist))
 
 ;; ---- Emacs Customize Variables -------------------------------------------------
+
+;; Set up the default font to be OS dependent
+(cond
+ ((or (eq system-type 'cygwin) (eq system-type 'windows-nt))
+  (setq fontFamily "Courier New"))
+
+ (t
+  (setq fontFamily "Liberation Mono")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -168,7 +187,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 80 :family "Liberation Mono"))))
+ '(default ((t (:height 80 :family fontFamily))))
  '(semantic-decoration-on-unknown-includes ((((class color) (background light)) (:background "#333333")))))
 
 (put 'downcase-region 'disabled nil)
