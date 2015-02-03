@@ -73,6 +73,10 @@
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
 
+;; ---- Encryption ----------------------------------------------------------------
+(require 'epa-file)
+(setenv "GPG_AGENT_INFO" nil)
+
 ;; ---- Shell Commands ------------------------------------------------------------
 
 (global-set-key "\C-z" 'eshell)
