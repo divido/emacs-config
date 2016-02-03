@@ -22,7 +22,7 @@
 	   (or (package-installed-p package)
 		   (if (y-or-n-p (format "Package %s is missing. Install it? " package))
 			   (package-install package))))
-	 '(color-theme color-theme-solarized git-commit-mode gitconfig-mode gitignore-mode))))
+	 '(color-theme color-theme-solarized gitconfig-mode gitignore-mode))))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
@@ -107,7 +107,6 @@
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 ;; ---- Git Modes -----------------------------------------------------------------
-(require 'git-commit-mode)
 (require 'gitconfig-mode)
 (require 'gitignore-mode)
 
