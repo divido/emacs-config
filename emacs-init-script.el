@@ -144,6 +144,7 @@
 
 ;; ---- Web Mode ------------------------------------------------------------------
 (require 'web-mode)
+(require 'js-skeletons)
 
 ;; ---- Auto Fill -----------------------------------------------------------------
 (defun auto-fill-80 ()
@@ -178,6 +179,7 @@
 (global-set-key "\M-csc" 'c++-class-skeleton)
 (global-set-key "\M-csf" 'c++-stl-foreach)
 (global-set-key "\M-csd" 'c++-doxygen-block)
+(global-set-key "\M-csl" 'js-console-log-var)
 (global-set-key "\M-cl" 'align)
 (global-set-key "\M-c\M-l" 'align-regexp)
 (global-set-key "\M-cmn" 'linum-mode)
@@ -194,6 +196,7 @@
 		 ("\\.tex$" . LaTeX-mode)
 		 ("\\.html$" . web-mode)
 		 ("\\.js$" . web-mode)
+		 ("\\.jsp$" . web-mode)
 		 ("\\.php$" . web-mode))
        auto-mode-alist))
 
