@@ -13,6 +13,7 @@
 (unless (file-exists-p "~/emacs/packages-up-to-date")
   (progn
 	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+	(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 	(package-refresh-contents)
 
 	;; This iterates through a list of packages that are necessary for processing
@@ -22,7 +23,13 @@
 	   (or (package-installed-p package)
 		   (if (y-or-n-p (format "Package %s is missing. Install it? " package))
 			   (package-install package))))
-	 '(color-theme color-theme-solarized git-commit-mode gitconfig-mode gitignore-mode))))
+	 '(color-theme
+	   color-theme-solarized
+	   git-commit-mode
+	   gitconfig-mode
+	   gitignore-mode
+	   smart-tabs-mode
+	   use-package))))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
@@ -64,8 +71,17 @@
 (if (not (eq window-system 'nil))
 	(color-theme-solarized-dark))
 
+;; ---- The Only Way To Indent ----------------------------------------------------
+(smart-tabs-add-language-support web web-mode-hook
+  ((web-mode-indent-line . web-mode-code-indent-offset)))
+
+(defvaralias 'web-mode-markup-indent-offset 'web-mode-code-indent-offset)
+(defvaralias 'web-mode-css-indent-offset 'web-mode-code-indent-offset)
+(defvaralias 'web-mode-sql-indent-offset 'web-mode-code-indent-offset)
+
+(smart-tabs-insinuate 'c 'c++ 'java 'javascript 'cperl 'python 'ruby 'nxml 'web)
+
 ;; ---- C++ Coding Stuff ----------------------------------------------------------
-(require 'smart-tabs)
 (require 'c++-skeletons)
 (require 'c++-extra-keywords)
 
