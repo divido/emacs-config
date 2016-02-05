@@ -122,6 +122,21 @@
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist
+             'maven)
+(add-to-list
+ 'compilation-error-regexp-alist-alist
+ '(maven
+   "\\[ERROR\\] \\(.+?\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\].\*" 1 2 3))
+
+(when (eq system-type 'cygwin)
+  (setq compilation-parse-errors-filename-function
+		'(lambda (path)
+		   (replace-regexp-in-string
+			"\n" "" (shell-command-to-string
+					 (concat "cygpath --unix '" path "'"))))))
+
 ;; ---- Git Modes -----------------------------------------------------------------
 (require 'git-commit-mode)
 (require 'gitconfig-mode)
