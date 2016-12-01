@@ -13,7 +13,7 @@
 (unless (file-exists-p "~/emacs/packages-up-to-date")
   (progn
 	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-	(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+	(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 	(package-refresh-contents)
 
 	;; This iterates through a list of packages that are necessary for processing
@@ -25,10 +25,12 @@
 			   (package-install package))))
 	 '(color-theme
 	   color-theme-solarized
-	   git-commit-mode
 	   gitconfig-mode
 	   gitignore-mode
 	   smart-tabs-mode
+	   tide
+	   company
+	   wgrep
 	   use-package))))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
@@ -44,6 +46,7 @@
 (setq-default fill-column 80)
 (setq-default truncate-lines t)
 (transient-mark-mode 1)
+(setq ring-bell-function 'ignore)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
@@ -62,6 +65,7 @@
 
 (ido-mode)
 (ido-everywhere)
+(setq ido-enable-flex-matching t)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -70,6 +74,9 @@
 (require 'color-theme)
 (if (not (eq window-system 'nil))
 	(color-theme-solarized-dark))
+
+(global-unset-key [C-down-mouse-1])
+(global-unset-key [S-down-mouse-1])
 
 ;; ---- The Only Way To Indent ----------------------------------------------------
 (smart-tabs-add-language-support web web-mode-hook
@@ -92,6 +99,9 @@
 ;; ---- Encryption ----------------------------------------------------------------
 (require 'epa-file)
 (setenv "GPG_AGENT_INFO" nil)
+
+;; ---- Fish Shell Mode -----------------------------------------------------------
+(require 'fish-mode)
 
 ;; ---- Shell Commands ------------------------------------------------------------
 
@@ -131,11 +141,15 @@
    "\\[ERROR\\] \\(.+?\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\].\*" 1 2 3))
 
 (when (eq system-type 'cygwin)
-  (setq compilation-parse-errors-filename-function
-		'(lambda (path)
-		   (replace-regexp-in-string
-			"\n" "" (shell-command-to-string
-					 (concat "cygpath --unix '" path "'"))))))
+  (progn
+	(setq compilation-parse-errors-filename-function
+		  '(lambda (path)
+			 (replace-regexp-in-string
+			  "\n" "" (shell-command-to-string
+					   (concat "cygpath --unix '" path "'")))))
+	(defun cygpathWindows (cygwinPath)
+	  (replace-regexp-in-string
+	   "\n" "" (shell-command-to-string (concat "cygpath --windows '" cygwinPath "'"))))))
 
 ;; ---- Git Modes -----------------------------------------------------------------
 (require 'git-commit-mode)
@@ -145,6 +159,61 @@
 ;; ---- Web Mode ------------------------------------------------------------------
 (require 'web-mode)
 (require 'js-skeletons)
+
+(require 'typescript-mode)
+
+;; ----------------------------------------
+;; Tide Stuff
+
+;; (require 'typescript-mode)
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   ;; company is an optional dependency. You have to
+;;   ;; install it separately via package-install
+;;   ;; `M-x package-install [ret] company`
+;;   (company-mode +1))
+
+;; ;; aligns annotation to the right hand side
+;; (setq company-tooltip-align-annotations t)
+
+;; ;; formats the buffer before saving
+;; ;(add-hook 'before-save-hook 'tide-format-before-save)
+
+;; ;(add-hook 'typescript-mode-hook #'setup-tide-mode)
+;; (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file tss.log"))
+;; (setq tide-tsserver-executable "/home/dmd274/scripts/cygpath-tsserver")
+
+;; ;; format options
+;; (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+;; ----------------------------------------
+
+
+;; ----------------------------------------
+;; TSS Stuff
+
+;; (require 'typescript)
+;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+
+;; (require 'tss)
+
+;; ;; Key binding
+;; (setq tss-popup-help-key "C-:")
+;; (setq tss-jump-to-definition-key "C->")
+;; (setq tss-implement-definition-key "C-c i")
+
+;; ;; Make config suit for you. About the config item, eval the following sexp.
+;; ;; (customize-group "tss")
+
+;; ;; Do setting recommemded configuration
+;; (tss-config-default)
+;; ----------------------------------------
+
+;; ---- Writable Grep Buffers -----------------------------------------------------
+(require 'wgrep)
 
 ;; ---- Auto Fill -----------------------------------------------------------------
 (defun auto-fill-80 ()
