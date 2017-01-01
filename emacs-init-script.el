@@ -7,31 +7,55 @@
 (require 'package)
 (package-initialize)
 
-;; Create the packages-up-to-date file if you want to skip this package checking
-;; on this site. It makes emacs launch faster, but these commands are important
-;; on the first invocation after a clean setup.
-(unless (file-exists-p "~/emacs/packages-up-to-date")
-  (progn
-	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-	(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-	(package-refresh-contents)
+;; To optimize scanning for new packages, I store a special package status file
+;; in the emacs directory. This file contains a hash of the package list that is
+;; installed on the system currently. If the package list is edited, the hash
+;; won't match, and then emacs will invoke a full package update and install the
+;; specified list. Otherwise, it doesn't bother downloading the package list.
 
-	;; This iterates through a list of packages that are necessary for processing
-	;; this initialization file, and prompts for installation if any are missing.
-	(mapc
-	 (lambda (package)
-	   (or (package-installed-p package)
-		   (if (y-or-n-p (format "Package %s is missing. Install it? " package))
-			   (package-install package))))
-	 '(color-theme
-	   color-theme-solarized
-	   gitconfig-mode
-	   gitignore-mode
-	   smart-tabs-mode
-	   tide
-	   company
-	   wgrep
-	   use-package))))
+(setq package-status-file "~/emacs/package-status")
+(defun read-current-package-hash ()
+  "Retrieve the hash from our specially named status file and return it"
+  (if (file-exists-p package-status-file)
+	  (with-temp-buffer
+		(insert-file-contents package-status-file)
+		(buffer-string))
+	"Missing"))
+
+(defun update-current-package-hash (new-hash)
+  "Write the new hash value out to the specially name status file"
+  (with-temp-file package-status-file (insert new-hash)))
+
+;; Here's the startup check for the package status, including the package list
+(let* ((package-list
+	   '(color-theme
+		 color-theme-solarized
+		 gitconfig-mode
+		 gitignore-mode
+		 smart-tabs-mode
+		 tide
+		 company
+		 wgrep
+		 use-package)))
+  (let* ((package-hash (secure-hash 'sha1 (mapconcat 'symbol-name package-list " ")))
+		 (chosen-packages ()))
+	(if (equal package-hash (read-current-package-hash))
+		(message "Packages up to date")
+	  (progn
+		(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+		(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+		(package-refresh-contents)
+		(mapc
+		 (lambda (package)
+		   (cond
+			((package-installed-p package)
+			 (add-to-list 'chosen-packages package t))
+			((y-or-n-p (format "Package %s is missing. Install it? " package))
+			 (package-install package)
+			 (add-to-list 'chosen-packages package t)))
+		   (update-current-package-hash
+			(secure-hash 'sha1 (mapconcat 'symbol-name chosen-packages " "))))
+		 package-list)))))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
