@@ -12,8 +12,18 @@
 ;; installed on the system currently. If the package list is edited, the hash
 ;; won't match, and then emacs will invoke a full package update and install the
 ;; specified list. Otherwise, it doesn't bother downloading the package list.
-
 (setq package-status-file "~/emacs/package-status")
+(setq package-install-list
+	  '(color-theme
+		color-theme-solarized
+		gitconfig-mode
+		gitignore-mode
+		smart-tabs-mode
+		tide
+		company
+		wgrep
+		use-package))
+
 (defun read-current-package-hash ()
   "Retrieve the hash from our specially named status file and return it"
   (if (file-exists-p package-status-file)
@@ -26,36 +36,32 @@
   "Write the new hash value out to the specially name status file"
   (with-temp-file package-status-file (insert new-hash)))
 
-;; Here's the startup check for the package status, including the package list
-(let* ((package-list
-	   '(color-theme
-		 color-theme-solarized
-		 gitconfig-mode
-		 gitignore-mode
-		 smart-tabs-mode
-		 tide
-		 company
-		 wgrep
-		 use-package)))
-  (let* ((package-hash (secure-hash 'sha1 (mapconcat 'symbol-name package-list " ")))
-		 (chosen-packages ()))
-	(if (equal package-hash (read-current-package-hash))
-		(message "Packages up to date")
-	  (progn
-		(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-		(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-		(package-refresh-contents)
-		(mapc
-		 (lambda (package)
-		   (cond
-			((package-installed-p package)
-			 (add-to-list 'chosen-packages package t))
-			((y-or-n-p (format "Package %s is missing. Install it? " package))
-			 (package-install package)
-			 (add-to-list 'chosen-packages package t)))
-		   (update-current-package-hash
-			(secure-hash 'sha1 (mapconcat 'symbol-name chosen-packages " "))))
-		 package-list)))))
+(defun hash-package-list (package-list)
+  "Computes a hash for the supplied package list"
+  (secure-hash 'sha1 (mapconcat 'symbol-name package-list " ")))
+
+(defun check-single-package (package)
+  "Checks to see if a package needs to be installed, returns the package if it is, or nil if not"
+  (if (or (package-installed-p package)
+		  (when (y-or-n-p (format "Package %s is missing. Install it? " package))
+			(message "Installing %s" package)
+			package))
+	  package))
+
+(defun check-package-list (package-list)
+  "Checks a list of packages, returning a list of all ones installed"
+  (remove nil (mapcar 'check-single-package package-list)))
+
+;; Here's the startup check for the package status
+(if (equal (hash-package-list package-install-list) (read-current-package-hash))
+	(message "Packages up to date")
+  (progn
+	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+	(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+	(package-refresh-contents)
+	(update-current-package-hash
+	 (hash-package-list
+	  (check-package-list package-install-list)))))
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
