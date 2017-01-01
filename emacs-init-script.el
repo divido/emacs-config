@@ -152,7 +152,6 @@
 	   "\n" "" (shell-command-to-string (concat "cygpath --windows '" cygwinPath "'"))))))
 
 ;; ---- Git Modes -----------------------------------------------------------------
-(require 'git-commit-mode)
 (require 'gitconfig-mode)
 (require 'gitignore-mode)
 
