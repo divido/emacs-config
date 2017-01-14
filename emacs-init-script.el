@@ -127,6 +127,9 @@
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
 
+;; ---- Python --------------------------------------------------------------------
+(add-hook 'python-mode-hook '(lambda () (setq tab-width 4)) t)
+
 ;; ---- Encryption ----------------------------------------------------------------
 (require 'epa-file)
 (setenv "GPG_AGENT_INFO" nil)
