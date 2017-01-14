@@ -199,7 +199,7 @@
 (require 'sass-mode)
 
 (add-hook 'sass-mode-hook (lambda () (setq indent-tabs-mode t)))
-
+(add-hook 'scss-mode (global-set-key "\C-c\C-c" 'comment-region))
 ;; ----------------------------------------
 ;; Tide Stuff
 
