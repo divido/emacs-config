@@ -66,6 +66,8 @@
 
 ;; ---- Set Backups to use their own special directory ---------------------------
 (setq backup-directory-alist `(("." . "~/.emacs-backups")))
+(setq auto-save-file-name-transforms `((".*" "~/.emacs-backups" t)))
+(setq create-lockfiles nil)
 (setq backup-by-copying-when-linked t)
 (setq delete-old-versions t)
 (setq kept-new-versions 6)
