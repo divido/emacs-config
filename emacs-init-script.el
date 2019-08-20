@@ -19,8 +19,7 @@
 ;; specified list. Otherwise, it doesn't bother downloading the package list.
 (setq package-status-file "~/emacs/package-status")
 (setq package-install-list
-	  '(color-theme
-		color-theme-solarized
+	  '(color-theme-sanityinc-solarized
 		gitconfig-mode
 		gitignore-mode
 		smart-tabs-mode
@@ -111,10 +110,6 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-
-(require 'color-theme)
-(if (not (eq window-system 'nil))
-	(color-theme-solarized-dark))
 
 (global-unset-key [C-down-mouse-1])
 (global-unset-key [S-down-mouse-1])
@@ -330,6 +325,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
+ '(custom-safe-themes
+   (quote
+	("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
  '(inhibit-startup-screen t)
  '(sass-indent-offset 4))
 
