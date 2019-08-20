@@ -65,6 +65,9 @@
 	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 	(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 	(package-refresh-contents)
+	(mapc
+	 (lambda (package) (package-install package))
+	 package-install-list)
 	(update-current-package-hash
 	 (hash-package-list
 	  (check-package-list package-install-list)))))
