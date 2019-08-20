@@ -7,6 +7,11 @@
 (require 'package)
 (package-initialize)
 
+;; This hack seems to fix a problem for emacs 26.2 with regard to the base packages
+;; It should be removed once emacs updates to 26.3 or better
+;; See: https://www.reddit.com/r/emacs/comments/cdei4p/failed_to_download_gnu_archive_bad_request/
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; To optimize scanning for new packages, I store a special package status file
 ;; in the emacs directory. This file contains a hash of the package list that is
 ;; installed on the system currently. If the package list is edited, the hash
