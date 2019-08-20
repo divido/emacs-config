@@ -61,7 +61,6 @@
 (if (equal (hash-package-list package-install-list) (read-current-package-hash))
 	(message "Packages up to date")
   (progn
-	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 	(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 	(package-refresh-contents)
 	(mapc
