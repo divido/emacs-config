@@ -343,6 +343,7 @@
 (global-set-key "\M-csf" 'c++-stl-foreach)
 (global-set-key "\M-csd" 'c++-doxygen-block)
 (global-set-key "\M-csl" 'js-console-log-var)
+(global-set-key "\M-csj" 'js-console-log-json-var)
 (global-set-key "\M-cl" 'align)
 (global-set-key "\M-c\M-l" 'align-regexp)
 (global-set-key "\M-cmn" 'linum-mode)
