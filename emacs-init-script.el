@@ -22,6 +22,7 @@
 	  '(color-theme-sanityinc-solarized
 		smart-tabs-mode
 		sass-mode
+		yaml-mode
 		tide
 		company
 		wgrep
