@@ -365,6 +365,11 @@
 		 ("\\.php$" . web-mode))
        auto-mode-alist))
 
+;; ---- Emacs Server --------------------------------------------------------------
+
+(server-start)
+(global-auto-revert-mode)
+
 ;; ---- Emacs Customize Variables -------------------------------------------------
 
 ;; Set up the default font to be OS dependent
