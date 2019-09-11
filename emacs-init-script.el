@@ -337,7 +337,7 @@
 (global-set-key "\M-c\M-w" 'delete-trailing-whitespace)
 (global-set-key "\M-c\M-c" 'uncomment-region)
 (global-set-key "\M-c\M-f" 'auto-fill-80)
-(global-set-key "\M-c\M-s" 'split-and-follow)
+;(global-set-key "\M-c\M-s" 'split-and-follow)
 (global-set-key "\M-c`" 'compile)
 (global-set-key "\M-csc" 'c++-class-skeleton)
 (global-set-key "\M-csf" 'c++-stl-foreach)
