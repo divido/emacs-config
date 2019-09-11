@@ -202,6 +202,60 @@
 
 (add-hook 'sass-mode-hook (lambda () (setq indent-tabs-mode t)))
 (add-hook 'scss-mode (global-set-key "\C-c\C-c" 'comment-region))
+
+;; ---- Flyspell ------------------------------------------------------------------
+
+(require 'flyspell)
+
+(defun web-mode-flyspell-verify ()
+  (let ((f (get-text-property (- (point) 1) 'face)))
+	;;(message "%s" f)
+	(memq f '(web-mode-javascript-comment-face
+			  web-mode-comment-face))))
+(put 'web-mode 'flyspell-mode-predicate 'web-mode-flyspell-verify)
+
+(defun java-mode-flyspell-verify ()
+  (let ((f (get-text-property (- (point) 1) 'face)))
+	;;(message "%s" f)
+	(memq f '(font-lock-comment-face
+			  font-lock-doc-string-face))))
+(put 'java-mode 'flyspell-mode-predicate 'java-mode-flyspell-verify)
+
+;;(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+;; These advice definitions restart the ispell process without run-together, and
+;; include the keyboard definiton. They are utilized when providing suggestions
+(defadvice ispell-word (around my-ispell-word activate)
+  (let ((old-ispell-extra-args ispell-extra-args))
+	(ispell-kill-ispell t)
+	(setq ispell-extra-args '("--sug-mode=normal" "--keyboard=dvorak" "--dont-run-together"))
+	ad-do-it
+	(setq ispell-extra-args old-ispell-extra-args)
+	(ispell-kill-ispell t)
+	))
+
+(defadvice flyspell-auto-correct-word (around my-flyspell-auto-correct-word activate)
+  (let ((old-ispell-extra-args ispell-extra-args))
+	(ispell-kill-ispell t)
+	(setq ispell-extra-args '("--sug-mode=normal" "--keyboard=dvorak" "--dont-run-together"))
+	ad-do-it
+	(setq ispell-extra-args old-ispell-extra-args)
+	(ispell-kill-ispell t)
+	))
+
+(defadvice flyspell-auto-correct-previous-word (around my-flyspell-auto-correct-word activate)
+  (let ((old-ispell-extra-args ispell-extra-args))
+	(ispell-kill-ispell t)
+	(setq ispell-extra-args '("--sug-mode=normal" "--keyboard=dvorak" "--dont-run-together"))
+	ad-do-it
+	(setq ispell-extra-args old-ispell-extra-args)
+	(ispell-kill-ispell t)
+	))
+
+;; Normal operations
+(setq ispell-program-name "aspell")
+(setq ispell-extra-args '("--run-together" "--run-together-min=2" "--run-together-limit=5"))
+
 ;; ----------------------------------------
 ;; Tide Stuff
 
@@ -292,6 +346,7 @@
 (global-set-key "\M-cl" 'align)
 (global-set-key "\M-c\M-l" 'align-regexp)
 (global-set-key "\M-cmn" 'linum-mode)
+(global-set-key "\M-c;" 'flyspell-buffer)
 
 ;; ---- Auto Mode -----------------------------------------------------------------
 (setq auto-mode-alist
