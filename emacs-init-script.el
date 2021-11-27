@@ -20,8 +20,6 @@
 (setq package-status-file "~/emacs/package-status")
 (setq package-install-list
 	  '(color-theme-sanityinc-solarized
-		gitconfig-mode
-		gitignore-mode
 		smart-tabs-mode
 		sass-mode
 		tide
@@ -188,10 +186,6 @@
 	(defun cygpathWindows (cygwinPath)
 	  (replace-regexp-in-string
 	   "\n" "" (shell-command-to-string (concat "cygpath --windows '" cygwinPath "'"))))))
-
-;; ---- Git Modes -----------------------------------------------------------------
-(require 'gitconfig-mode)
-(require 'gitignore-mode)
 
 ;; ---- Web Mode ------------------------------------------------------------------
 (require 'web-mode)
