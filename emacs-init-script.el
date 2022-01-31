@@ -87,7 +87,7 @@
 ;; ---- Configuring the display / general setup ----------------------------------
 (setq-default show-trailing-whitespace t)
 (setq-default split-height-threshold nil)
-(setq-default fill-column 80)
+(setq-default fill-column 132)
 (setq-default truncate-lines t)
 (transient-mark-mode 1)
 (setq ring-bell-function 'ignore)
@@ -314,10 +314,10 @@
 (require 'wgrep)
 
 ;; ---- Auto Fill -----------------------------------------------------------------
-(defun auto-fill-80 ()
+(defun auto-fill-132 ()
   (interactive)
   (auto-fill-mode)
-  (setq fill-column 80))
+  (setq fill-column 132))
 
 ;; ---- Documents -----------------------------------------------------------------
 (add-hook 'latex-mode-hook
@@ -348,7 +348,7 @@
 (global-unset-key "\M-c") ;; Who needs capitialize-word? I use this as a prefix key for my own stuff
 (global-set-key "\M-c\M-w" 'delete-trailing-whitespace)
 (global-set-key "\M-c\M-c" 'uncomment-region)
-(global-set-key "\M-c\M-f" 'auto-fill-80)
+(global-set-key "\M-c\M-f" 'auto-fill-132)
 ;(global-set-key "\M-c\M-s" 'split-and-follow)
 (global-set-key "\M-c`" 'compile)
 (global-set-key "\M-csc" 'c++-class-skeleton)
