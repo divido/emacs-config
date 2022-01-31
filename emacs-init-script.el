@@ -133,6 +133,9 @@
 ;; ---- Python --------------------------------------------------------------------
 (add-hook 'python-mode-hook '(lambda () (setq tab-width 4)) t)
 
+;; ---- Cucumber ------------------------------------------------------------------
+(require 'feature-mode)
+
 ;; ---- Encryption ----------------------------------------------------------------
 (require 'epa-file)
 (setenv "GPG_AGENT_INFO" nil)

@@ -1,0 +1,3 @@
+[submodule "modes/cucumber"]
+	path = modes/cucumber
+	url = https://github.com/michaelklishin/cucumber.el.git
