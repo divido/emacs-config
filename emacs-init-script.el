@@ -20,9 +20,15 @@
 (setq package-status-file "~/emacs/package-status")
 (setq package-install-list
 	  '(color-theme-sanityinc-solarized
+		dockerfile-mode
 		smart-tabs-mode
 		sass-mode
 		yaml-mode
+		adoc-mode
+		markdown-mode
+		go-mode
+		markdown-preview-mode
+		markup-faces
 		tide
 		company
 		wgrep
@@ -321,6 +327,14 @@
 			(setq fill-prefix "  ")
 			(flyspell-mode)))
 
+(autoload 'adoc-mode "adoc-mode" nil t)
+(add-hook 'adoc-mode-hook
+		  (lambda ()
+			(auto-fill-mode)
+			(setq fill-column 132)
+			(setq fill-prefix "  ")
+			(flyspell-mode)))
+
 ;; Useful for Guitar tabs
 (defun split-and-follow ()
   ""
@@ -357,6 +371,7 @@
          ("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)
 		 ("\\.tex$" . LaTeX-mode)
+		 ("\\.adoc$" . adoc-mode)
 		 ("\\.html$" . web-mode)
 		 ("\\.js$" . web-mode)
 		 ("\\.jsp$" . web-mode)
@@ -390,7 +405,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(color-theme-sanityinc-solarized wgrep use-package tss tide smart-tabs-mode sass-mode javaimp gitignore-mode gitconfig-mode cygwin-mount company color-theme-solarized)))
+	(dockerfile-mode markdown-preview-eww markup-faces markdown-preview-mode markdown-mode adoc-mode yaml-mode color-theme-sanityinc-solarized wgrep use-package tss tide smart-tabs-mode sass-mode javaimp gitignore-mode gitconfig-mode cygwin-mount company color-theme-solarized)))
  '(sass-indent-offset 4))
 
 (custom-set-faces
