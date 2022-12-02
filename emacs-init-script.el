@@ -25,11 +25,13 @@
 		sass-mode
 		yaml-mode
 		adoc-mode
+		feature-mode
 		markdown-mode
 		go-mode
 		markdown-preview-mode
 		markup-faces
 		tide
+		terraform-mode
 		company
 		wgrep
 		use-package))
@@ -398,14 +400,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
+ '(custom-enabled-themes '(sanityinc-solarized-dark))
  '(custom-safe-themes
-   (quote
-	("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
+   '("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
  '(inhibit-startup-screen t)
+ '(ispell-program-name "/usr/local/bin/aspell")
  '(package-selected-packages
-   (quote
-	(dockerfile-mode markdown-preview-eww markup-faces markdown-preview-mode markdown-mode adoc-mode yaml-mode color-theme-sanityinc-solarized wgrep use-package tss tide smart-tabs-mode sass-mode javaimp gitignore-mode gitconfig-mode cygwin-mount company color-theme-solarized)))
+   '(dockerfile-mode markdown-preview-eww markup-faces markdown-preview-mode markdown-mode adoc-mode yaml-mode color-theme-sanityinc-solarized wgrep use-package tss tide smart-tabs-mode sass-mode javaimp gitignore-mode gitconfig-mode cygwin-mount company color-theme-solarized))
  '(sass-indent-offset 4))
 
 (custom-set-faces
@@ -413,7 +414,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 120 :family fontFamily))))
+ '(default ((t (:height 140 :family fontFamily))))
+ '(markup-meta-face ((t (:stipple nil :foreground "dark cyan" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :width normal :foundry "unknown" :family "Monospace"))))
+ '(markup-meta-hide-face ((t (:inherit markup-meta-face :foreground "dark gray"))))
  '(semantic-decoration-on-unknown-includes ((((class color) (background light)) (:background "#333333")))))
 
 (put 'downcase-region 'disabled nil)
