@@ -347,17 +347,11 @@
 ;; ---- Documents -----------------------------------------------------------------
 (add-hook 'latex-mode-hook
 		  (lambda ()
-			(auto-fill-mode)
-			(setq fill-column 132)
-			(setq fill-prefix "  ")
 			(flyspell-mode)))
 
 (autoload 'adoc-mode "adoc-mode" nil t)
 (add-hook 'adoc-mode-hook
 		  (lambda ()
-			(auto-fill-mode)
-			(setq fill-column 132)
-			(setq fill-prefix "  ")
 			(flyspell-mode)))
 
 ;; Useful for Guitar tabs
