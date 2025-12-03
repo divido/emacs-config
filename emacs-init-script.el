@@ -436,7 +436,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 140 :family fontFamily))))
+ '(default ((t (:height 160 :family fontFamily))))
  '(markup-meta-face ((t (:stipple nil :foreground "dark cyan" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :width normal :foundry "unknown" :family "Monospace"))))
  '(markup-meta-hide-face ((t (:inherit markup-meta-face :foreground "dark gray"))))
  '(semantic-decoration-on-unknown-includes ((((class color) (background light)) (:background "#333333")))))
