@@ -216,6 +216,22 @@
 (add-hook 'sass-mode-hook (lambda () (setq indent-tabs-mode t)))
 (add-hook 'scss-mode (global-set-key "\C-c\C-c" 'comment-region))
 
+;; ---- JSON Mode -----------------------------------------------------------------
+
+(defun prettier-json ()
+ (interactive)
+ (let ((line (line-number-at-pos)))
+   ;; replace buffer with output of the prettier command command
+   (shell-command-on-region (point-min) (point-max) "npx prettier --parser json-stringify" nil t)
+   ;; restore cursor position
+   (goto-line line)
+   (recenter-top-bottom)))
+
+(add-hook 'js-json-mode-hook (lambda ()
+							   (setq indent-tabs-mode nil)
+							   (setq js-indent-level 2)
+							   (local-set-key "\C-c\C-p" 'prettier-json)))
+
 ;; ---- Flyspell ------------------------------------------------------------------
 
 (require 'flyspell)
