@@ -185,23 +185,26 @@
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 (require 'compile)
-(add-to-list 'compilation-error-regexp-alist
-             'maven)
-(add-to-list
- 'compilation-error-regexp-alist-alist
- '(maven
-   "\\[ERROR\\] \\(.+?\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\].\*" 1 2 3))
+(add-to-list 'compilation-error-regexp-alist-alist
+			 '(maven
+			   "\\[ERROR\\] \\(.+?\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\].\*"
+			   1 2 3))
 
-(when (eq system-type 'cygwin)
-  (progn
-	(setq compilation-parse-errors-filename-function
-		  '(lambda (path)
-			 (replace-regexp-in-string
-			  "\n" "" (shell-command-to-string
-					   (concat "cygpath --unix '" path "'")))))
-	(defun cygpathWindows (cygwinPath)
-	  (replace-regexp-in-string
-	   "\n" "" (shell-command-to-string (concat "cygpath --windows '" cygwinPath "'"))))))
+;; Node.js stack traces with parentheses: at ... (/path/file.js:123:45)
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(node-stack-trace
+               "^.*at .* (\\([^:]+\\):\\([0-9]+\\):\\([0-9]+\\))"
+               1 2 3))
+
+;; Node.js stack traces without parentheses: at /path/file.js:123:45
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(node-stack-trace-simple
+               "^.*at \\([^():]+\\):\\([0-9]+\\):\\([0-9]+\\)"
+               1 2 3))
+
+(add-to-list 'compilation-error-regexp-alist 'maven)
+(add-to-list 'compilation-error-regexp-alist 'node-stack-trace)
+(add-to-list 'compilation-error-regexp-alist 'node-stack-trace-simple)
 
 ;; ---- Web Mode ------------------------------------------------------------------
 (require 'web-mode)
