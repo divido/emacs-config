@@ -29,6 +29,7 @@
 		markdown-mode
 		go-mode
 		markdown-preview-mode
+		plantuml-mode
 		markup-faces
 		tide
 		terraform-mode
@@ -143,6 +144,9 @@
 
 ;; ---- Cucumber ------------------------------------------------------------------
 (require 'feature-mode)
+
+;; ---- PlantUML ------------------------------------------------------------------
+(add-hook 'plantuml-mode-hook '(lambda () (setq plantuml-indent-level 4)))
 
 ;; ---- Encryption ----------------------------------------------------------------
 (require 'epa-file)
@@ -374,6 +378,7 @@
          ("\\.cmake\\'" . cmake-mode)
 		 ("\\.tex$" . LaTeX-mode)
 		 ("\\.adoc$" . adoc-mode)
+		 ("\\.puml$" . plantuml-mode)
 		 ("\\.html$" . web-mode)
 		 ("\\.js$" . web-mode)
 		 ("\\.jsp$" . web-mode)
@@ -402,11 +407,15 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(sanityinc-solarized-dark))
  '(custom-safe-themes
-   '("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
+   '("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328"
+	 "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
  '(inhibit-startup-screen t)
  '(ispell-program-name "/usr/local/bin/aspell")
  '(package-selected-packages
-   '(dockerfile-mode markdown-preview-eww markup-faces markdown-preview-mode markdown-mode adoc-mode yaml-mode color-theme-sanityinc-solarized wgrep use-package tss tide smart-tabs-mode sass-mode javaimp gitignore-mode gitconfig-mode cygwin-mount company color-theme-solarized))
+   '(adoc-mode color-theme-sanityinc-solarized color-theme-solarized company cygwin-mount dockerfile-mode feature-mode gitconfig-mode
+			   gitignore-mode go-mode graphviz-dot-mode haskell-mode javaimp markdown-mode markdown-preview-eww
+			   markdown-preview-mode markup-faces plantuml-mode sass-mode smart-tabs-mode svelte-mode terraform-mode tide tss
+			   use-package wgrep yaml-mode))
  '(sass-indent-offset 4))
 
 (custom-set-faces
